@@ -2,6 +2,7 @@ package com.example.greetingapp.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -16,17 +17,21 @@ public class GreetingController {
     GreetingService greetingService;
 
     /**
-     * Method for Get request using dependency injection: sayHello.
+     * Method for Get request using dependency injection: say hello.
      * URL: /hello
      *
-     * @return - greetingService.sayHello
+     * @return - greetingService.say hello
      */
     @GetMapping("/hello")
-    public String sayHello() {
-        return greetingService.sayHello();
-
+    public String sayPosting(@RequestParam(required = false) String firstName, @RequestParam(required = false) String lastName) {
+        if (lastName == null) lastName = "";
+        else if (firstName == null) firstName = "";
+        else if (firstName == null && lastName == null) {
+            firstName = "";
+            lastName = "";
+        }
+        return greetingService.sayHelloByName(firstName, lastName);
     }
-
 }
 
 
